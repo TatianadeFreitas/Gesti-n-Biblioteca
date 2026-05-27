@@ -3,12 +3,12 @@
 Libros = [] # lista donde se guardan todos los libros
 
 #Función de agregar libros
-def registrar_libro(libros, codigo, titulo, autor, anio, genero): #libro es un diccionario individual (es como ponerle nombre a la i)
+def registrar_libro(codigo, titulo, autor, anio, genero): #libro es un diccionario individual (es como ponerle nombre a la i)
 
     for libro in Libros:
         if libro["codigo"]==codigo:
             print("Error: Ya existe un libro con el código", codigo)
-        return
+            return
     
     nuevo_libro = {
         "codigo": codigo,
@@ -21,11 +21,22 @@ def registrar_libro(libros, codigo, titulo, autor, anio, genero): #libro es un d
     Libros.append(nuevo_libro)
     print("Libro registrado con éxito")
 
+def listar_libros(estado=None):
+    for libro in Libros:
+        #Si no se pasa un estado como argumento muestra todo, sino solo los que coincidan con el argumento pasado
+        if estado==None or libro["estado"]==estado:
+            print(libro["codigo"], libro["titulo"], libro["autor"], libro["estado"])
+
 
 '''
 PRUEBAS
 
 Ejecución 1: Registrar libro
-    registrar_libro(Libros, "L001", "El principito", "Antoine", 1943, "Novela") Funciona
+    registrar_libro("L001", "El principito", "Antoine", 1943, "Novela") Funciona
 
+Ejecución 4: Listar libros
+    listar_libros()
+
+Ejecución 5: Listar libros disponibles
+    listar_libros("DISPONIBLE")
 '''
