@@ -19,13 +19,7 @@ def registrar_libro(codigo, titulo, autor, anio, genero): #libro es un diccionar
         "estado": "DISPONIBLE"
     }
     Libros.append(nuevo_libro)
-    print("Libro registrado con éxito")
-
-def buscar_libro(codigo):     
-    for libro in Libros:
-        if libro["codigo"] == codigo:  #recorre y se fija si el codigo esta en los libros agregados
-            return libro
-    return None    
+    print("Libro registrado con éxito")   
 
 def listar_libros(estado=None):
     for libro in Libros:
@@ -33,6 +27,12 @@ def listar_libros(estado=None):
         if estado==None or libro["estado"]==estado:
             print(libro["codigo"], libro["titulo"], libro["autor"], libro["estado"])
 
+#Función para verificar que exista el libro que se quiere prestar
+def buscar_libro(codigo):     
+    for libro in Libros:
+        if libro["codigo"] == codigo:  #recorre y se fija si el codigo esta en los libros agregados
+            return libro
+    return None 
 
 '''
 PRUEBAS

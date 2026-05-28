@@ -3,6 +3,7 @@
 #Importo los modulos
 import sys
 from Libros import *
+from Prestamos import *
 
 # sys.argv[1] es la opcion que escribe el usuario en la consola
 opcion = sys.argv[1]
