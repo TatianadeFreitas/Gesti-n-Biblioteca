@@ -29,3 +29,27 @@ def prestar_libro(codigo, nombre_persona, fecha_prestamo_str, fecha_devolucion_s
     })
     libro["estado"] = "PRESTADO"
     print("Libro prestado con éxito.")
+
+def devolver_libro(codigo): #funcion devolver libro
+    libro = Libros.buscar_libro(codigo) #llama la funcion definida en el modulo Libros
+    if libro is None:      
+        print("Error: No existe un libro con el código:", codigo)
+        return
+    if libro["estado"] != "PRESTADO": #corroboramos que el libro este prestado
+        print("Error: El libro", codigo, "no está en estado PRESTADO")
+        return
+
+    for i, prestamo in enumerate(Prestamos): #enumerate va contando la posicion de i
+        if prestamo["codigo_libro"] == codigo:
+            Prestamos.pop(i) #con pop frenamos la lista y nos quedamos con ese valor de i , encontrado pr enumerate
+            break
+    libro["estado"] = "DISPONIBLE"
+    print("Libro devuelto con éxito.")
+
+def listar_prestamos():
+    if not Prestamos: #si la lista esta vacia
+        print("No hay préstamos activos.")
+        return
+
+    for p in Prestamos: #p es cada prestamo de la lista
+        print(p["codigo_libro"], p["nombre_persona"], p["fecha_prestamo"], p["fecha_devolucion"])
