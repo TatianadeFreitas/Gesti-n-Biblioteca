@@ -4,15 +4,15 @@ import Libros #Modulo
 
 Prestamos = [] #lista donde se guardan prestamos 
 
-def prestar_libro(codigo, nombre_persona, fecha_prestamo_str, fecha_devolucion_str):
+def prestar_libro(codigo_libro, nombre_persona, fecha_prestamo_str, fecha_devolucion_str):
 
-    libro = Libros.buscar_libro(codigo)  # busca funcion en modulo Libros
+    libro = Libros.buscar_libro(codigo_libro)  # busca funcion en modulo Libros
     if libro is None:
-        print("Error: No existe un libro con el código:", codigo)
+        print("Error: No existe un libro con el código:", codigo_libro)
         return  # sale de la función  
 
     if libro["estado"] != "DISPONIBLE":
-        print("Error: El libro", codigo, "no está disponible")
+        print("Error: El libro", codigo_libro, "no está disponible")
         return #en caso de si estar disponible, sigue con el codigo de fechas de prestamo y devolución
 
     fecha_p = datetime.strptime(fecha_prestamo_str, "%Y-%m-%d") #convierte el texto que ingresa el usuario en fecha
@@ -22,7 +22,7 @@ def prestar_libro(codigo, nombre_persona, fecha_prestamo_str, fecha_devolucion_s
         print("Error: La fecha de devolución no puede ser anterior al préstamo")
         return   
     Prestamos.append({ #se agrega un nuevo prestamo a la lista mediante un diccionario
-        "codigo_libro": codigo,
+        "codigo_libro": codigo_libro,
         "nombre_persona": nombre_persona,
         "fecha_prestamo": fecha_prestamo_str,
         "fecha_devolucion": fecha_devolucion_str
@@ -30,18 +30,19 @@ def prestar_libro(codigo, nombre_persona, fecha_prestamo_str, fecha_devolucion_s
     libro["estado"] = "PRESTADO"
     print("Libro prestado con éxito.")
 
-def devolver_libro(codigo): #funcion devolver libro
-    libro = Libros.buscar_libro(codigo) #llama la funcion definida en el modulo Libros
+
+def devolver_libro(codigo_libro): #funcion devolver libro
+    libro = Libros.buscar_libro(codigo_libro) #llama la funcion definida en el modulo Libros
     if libro is None:      
-        print("Error: No existe un libro con el código:", codigo)
+        print("Error: No existe un libro con el código:", codigo_libro)
         return
     if libro["estado"] != "PRESTADO": #corroboramos que el libro este prestado
-        print("Error: El libro", codigo, "no está en estado PRESTADO")
+        print("Error: El libro", codigo_libro, "no está en estado PRESTADO")
         return
 
-    for i, prestamo in enumerate(Prestamos): #enumerate va contando la posicion de i
-        if prestamo["codigo_libro"] == codigo:
-            Prestamos.pop(i) #con pop frenamos la lista y nos quedamos con ese valor de i , encontrado pr enumerate
+    for i, prestamo in enumerate(Prestamos): #enumerate va contando la posicion de i / enumerate da la posición y el valor
+        if prestamo["codigo_libro"] == codigo_libro:
+            Prestamos.pop(i) #con pop frenamos la lista y nos quedamos con ese valor de i , encontrado por enumerate
             break
     libro["estado"] = "DISPONIBLE"
     print("Libro devuelto con éxito.")

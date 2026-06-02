@@ -34,15 +34,3 @@ def buscar_libro(codigo):
             return libro
     return None 
 
-'''
-PRUEBAS
-
-Ejecución 1: Registrar libro
-    registrar_libro("L001", "El principito", "Antoine", 1943, "Novela") Funciona
-
-Ejecución 4: Listar libros
-    listar_libros()
-
-Ejecución 5: Listar libros disponibles
-    listar_libros("DISPONIBLE")
-'''
