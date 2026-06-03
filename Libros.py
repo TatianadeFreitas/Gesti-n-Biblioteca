@@ -34,3 +34,9 @@ def buscar_libro(codigo):
             return libro
     return None 
 
+def guardar_libros():
+    archivo_Lib = open( "Libros.txt", "w") #La "w" le dice a Python en qué modo abrir el archivo (write, read, append)
+    for libro in Libros:
+        contenido = libro["codigo"] + libro["titulo"] + libro["autor"] + str(libro["anio"]) + libro["genero"] + libro["estado"]
+        archivo_Lib.write(contenido + "\n")
+    archivo_Lib.close()
