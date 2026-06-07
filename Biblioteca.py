@@ -5,6 +5,9 @@ import sys
 import Libros
 import Prestamos
 
+#carga los datos en el jason ni bien inicia el programa
+Libros.cargar_libros()
+
 # sys.argv[1] es la opcion que escribe el usuario en la consola
 opcion = sys.argv[1]
 
@@ -16,6 +19,7 @@ if opcion == "registrar_libro":
     genero=sys.argv[6]
 
     Libros.registrar_libro(codigo, titulo, autor, anio, genero)
+    Libros.guardar_libros()
 
 elif opcion == "listar_libros":
     if len(sys.argv) > 2: #Si la cantidad de ELEMENTOS de la lista es mayor a dos es porque el usuario especifica que libros quiere listar, entonces (estado) se pasa como argumento
@@ -31,11 +35,13 @@ elif opcion == "prestar_libro":
     fecha_devolucion=sys.argv[5]
 
     Prestamos.prestar_libro(codigo_libro, nombre_persona, fecha_prestamo, fecha_devolucion)
+    Libros.guardar_libros() # Se usa aca también ya que se genera una modificación en el archivo
 
 elif opcion == "devolver_libro":
     codigo_libro=sys.argv[2]
 
     Prestamos.devolver_libro(codigo_libro)
+    Libros.guardar_libros()
 
 elif opcion == "listar_prestamos":
     Prestamos.listar_prestamos()

@@ -1,4 +1,5 @@
 #Funciones relacionadas a libros
+import json
 
 Libros = [] # lista donde se guardan todos los libros
 
@@ -30,13 +31,16 @@ def listar_libros(estado=None):
 #Función para verificar que exista el libro que se quiere prestar
 def buscar_libro(codigo):     
     for libro in Libros:
-        if libro["codigo"] == codigo:  #recorre y se fija si el codigo esta en los libros agregados
+        if libro["codigo"] == codigo:  #Recorre y se fija si el codigo esta en los libros agregados
             return libro
     return None 
 
 def guardar_libros():
-    archivo_Lib = open( "Libros.txt", "w") #La "w" le dice a Python en qué modo abrir el archivo (write, read, append)
-    for libro in Libros:
-        contenido = libro["codigo"] + libro["titulo"] + libro["autor"] + str(libro["anio"]) + libro["genero"] + libro["estado"]
-        archivo_Lib.write(contenido + "\n")
-    archivo_Lib.close()
+    with open("Libros.json", "w", encoding="utf-8") as archivo_Lib:
+        json.dump(Libros, archivo_Lib, ensure_ascii=False, indent=4) # Primero va lo que quiero guardar (en este caso la lista Libros), después va en donde lo guardamos (en este caso en el archivo Libros.json esta almacendao en la variable archivo_Lib)
+
+def cargar_libros(): #Función usada para leer el contenido del archivo json creado con la función guardar_libros
+    global Libros # Sirve para que la función use la variable Libros que ya existe fuera de ella
+    with open("Libros.json", "r", encoding="utf-8") as archivo_Lib:
+        Libros = json.load(archivo_Lib)
+        
