@@ -3,6 +3,7 @@ import json
 
 Libros = [] # lista donde se guardan todos los libros
 
+
 #Función de agregar libros
 def registrar_libro(codigo, titulo, autor, anio, genero): #libro es un diccionario individual (es como ponerle nombre a la i)
 
@@ -23,6 +24,10 @@ def registrar_libro(codigo, titulo, autor, anio, genero): #libro es un diccionar
     print("Libro registrado con éxito")   
 
 def listar_libros(estado=None):
+    if not Libros: #si la lista esta vacia
+        print("No hay libros registrados.")
+        return
+    
     for libro in Libros:
         #Si no se pasa un estado como argumento muestra todo, sino solo los que coincidan con el argumento pasado
         if estado==None or libro["estado"]==estado:
@@ -39,8 +44,13 @@ def guardar_libros():
     with open("Libros.json", "w", encoding="utf-8") as archivo_Lib:
         json.dump(Libros, archivo_Lib, ensure_ascii=False, indent=4) # Primero va lo que quiero guardar (en este caso la lista Libros), después va en donde lo guardamos (en este caso en el archivo Libros.json esta almacendao en la variable archivo_Lib)
 
+        
 def cargar_libros(): #Función usada para leer el contenido del archivo json creado con la función guardar_libros
     global Libros # Sirve para que la función use la variable Libros que ya existe fuera de ella
-    with open("Libros.json", "r", encoding="utf-8") as archivo_Lib:
-        Libros = json.load(archivo_Lib)
-        
+    try: # Sirve para decirle al programa que hacer en caso de que no exista el archivo
+        with open("Libros.json", "r", encoding="utf-8") as archivo_Lib:
+            Libros = json.load(archivo_Lib)  # intenta abrir y leer el archivo
+    except:
+        Libros = [] # si falla, arranca con lista vacía
+
+cargar_libros()

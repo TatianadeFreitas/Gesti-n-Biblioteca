@@ -1,12 +1,9 @@
 #Archivo principal
-
 #Importo los modulos
 import sys
 import Libros
 import Prestamos
 
-#carga los datos en el jason ni bien inicia el programa
-Libros.cargar_libros()
 
 # sys.argv[1] es la opcion que escribe el usuario en la consola
 opcion = sys.argv[1]
@@ -35,12 +32,15 @@ elif opcion == "prestar_libro":
     fecha_devolucion=sys.argv[5]
 
     Prestamos.prestar_libro(codigo_libro, nombre_persona, fecha_prestamo, fecha_devolucion)
+    Prestamos.guardar_prestamos()
     Libros.guardar_libros() # Se usa aca también ya que se genera una modificación en el archivo
+
 
 elif opcion == "devolver_libro":
     codigo_libro=sys.argv[2]
 
     Prestamos.devolver_libro(codigo_libro)
+    Prestamos.guardar_prestamos()
     Libros.guardar_libros()
 
 elif opcion == "listar_prestamos":

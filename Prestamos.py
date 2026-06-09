@@ -1,8 +1,10 @@
 #Funciones relacionadas a los préstamos
+import json
 from datetime import datetime #funcion de python que se usa para convertir texto en una fecha real que Python pueda operar
 import Libros #Modulo 
 
 Prestamos = [] #lista donde se guardan prestamos 
+
 
 def prestar_libro(codigo_libro, nombre_persona, fecha_prestamo_str, fecha_devolucion_str):
 
@@ -32,6 +34,7 @@ def prestar_libro(codigo_libro, nombre_persona, fecha_prestamo_str, fecha_devolu
 
 
 def devolver_libro(codigo_libro): #funcion devolver libro
+    global Prestamos  # Se declara global para que Python modifique la lista original del módulo y no cree una copia local
     libro = Libros.buscar_libro(codigo_libro) #llama la funcion definida en el modulo Libros
     if libro is None:      
         print("Error: No existe un libro con el código:", codigo_libro)
@@ -54,3 +57,17 @@ def listar_prestamos():
 
     for p in Prestamos: #p es cada prestamo de la lista
         print(p["codigo_libro"], p["nombre_persona"], p["fecha_prestamo"], p["fecha_devolucion"])
+
+def guardar_prestamos():
+    with open("Prestamos.json", "w", encoding="utf-8") as archivo_Pres:
+        json.dump(Prestamos, archivo_Pres, ensure_ascii=False, indent=4) 
+
+def cargar_prestamos():
+    global Prestamos
+    try:
+        with open("Prestamos.json", "r", encoding="utf-8") as archivo_Pres:
+            Prestamos = json.load(archivo_Pres)
+    except:
+        Prestamos = []
+
+cargar_prestamos()
